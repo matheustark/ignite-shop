@@ -1,3 +1,4 @@
+"use-client";
 import Image from "next/image";
 import "keen-slider/keen-slider.min.css";
 import { useKeenSlider } from "keen-slider/react";
@@ -8,6 +9,7 @@ import { stripe } from "@/lib/stripe";
 import { useState } from "react";
 import Stripe from "stripe";
 import { GetStaticProps } from "next";
+import Link from "next/link";
 
 interface PageProps {
   products: {
@@ -19,7 +21,6 @@ interface PageProps {
 }
 
 export default function Page({ products }: PageProps) {
-  const [list, setList] = useState([]);
   const [sliderRef, instanceRef] = useKeenSlider({
     slides: {
       perView: 3,
@@ -29,20 +30,22 @@ export default function Page({ products }: PageProps) {
   return (
     <HomeContainer ref={sliderRef}>
       {products.map((product) => (
-        <Product key={product.id} className="keen-slider__slide">
-          <Image
-            priority
-            src={product.imageUrl}
-            width={520}
-            height={480}
-            alt=""
-          />
+        <Link key={product.id} href={`/product/${product.id}`}>
+          <Product className="keen-slider__slide">
+            <Image
+              priority
+              src={product.imageUrl}
+              width={520}
+              height={480}
+              alt=""
+            />
 
-          <footer>
-            <strong>{product.name}</strong>
-            <span>{product.price}</span>
-          </footer>
-        </Product>
+            <footer>
+              <strong>{product.name}</strong>
+              <span>{product.price}</span>
+            </footer>
+          </Product>
+        </Link>
       ))}
     </HomeContainer>
   );
