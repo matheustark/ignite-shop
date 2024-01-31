@@ -1,4 +1,4 @@
-"use-client";
+"use strict";
 import Image from "next/image";
 import "keen-slider/keen-slider.min.css";
 import { useKeenSlider } from "keen-slider/react";
